@@ -1,4 +1,4 @@
-HTML
+iHTML
 <!DOCTYPE html>
 <html lang="fi">
 <head>
@@ -69,8 +69,8 @@ body {
 <script>
 const API_URL = "https://api.digitransit.fi/routing/v2/hsl/gtfs/v1";
 
-const WEST_STOP = "1454401";
-const EAST_STOP = "1454402";
+const WEST_STOP = "HSL:1454401";
+const EAST_STOP = "HSL:1454402";
 
 async function getMinutes(stopId) {
     const query = `
