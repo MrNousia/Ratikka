@@ -69,8 +69,28 @@ body {
 <script>
 const API_URL = "https://api.digitransit.fi/routing/v2/hsl/gtfs/v1";
 
-const WEST_STOP = "HSL:1454401";
-const EAST_STOP = "HSL:1454402";
+const STATIONS = {
+
+    karhukallio: {
+        west: "HSL:1454401",
+        east: "HSL:1454402"
+    }
+
+};
+
+const params = new URLSearchParams(window.location.search);
+
+const stationKey =
+    (params.get("station") || "karhukallio")
+    .toLowerCase();
+
+const station = STATIONS[stationKey];
+
+if (!station) {
+    document.body.innerHTML =
+        "<h1 style='color:white;text-align:center;margin-top:40vh'>Tuntematon pysäkki</h1>";
+    throw new Error("Tuntematon pysäkki");
+}
 
 async function getMinutes(stopId) {
     const query = `
@@ -118,8 +138,8 @@ async function getMinutes(stopId) {
 
 async function update() {
     try {
-        const west = await getMinutes(WEST_STOP);
-        const east = await getMinutes(EAST_STOP);
+    const west = await getMinutes(station.west);
+    const east = await getMinutes(station.east);
 
         document.getElementById("west").textContent = west;
         document.getElementById("east").textContent = east;
